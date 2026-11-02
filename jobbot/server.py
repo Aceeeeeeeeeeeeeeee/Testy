@@ -5,11 +5,12 @@ from datetime import datetime
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, abort, request
+from waitress import serve
 from twilio.request_validator import RequestValidator
 from twilio.twiml.messaging_response import MessagingResponse
 
 from . import bot, store, whatsapp, writer
-from .config import cargar_config, env
+from .config import RUTA_DB, cargar_config, cargar_cv, env, url_publica
 
 log = logging.getLogger(__name__)
 app = Flask(__name__)
@@ -34,11 +35,11 @@ def _en_segundo_plano(funcion, *args) -> None:
 
 
 def _verificar_twilio() -> None:
-    url_publica = env("PUBLIC_URL", obligatorio=False)
-    if not url_publica:
-        return  # sin PUBLIC_URL no se puede verificar la firma (solo para pruebas locales)
+    base = url_publica()
+    if not base:
+        return  # sin URL pública no se puede verificar la firma (solo para pruebas locales)
     validador = RequestValidator(env("TWILIO_AUTH_TOKEN"))
-    url = url_publica.rstrip("/") + request.path
+    url = base + request.path
     if not validador.validate(url, request.form, request.headers.get("X-Twilio-Signature", "")):
         abort(403)
 
@@ -75,7 +76,19 @@ def salud():
     return "jobbot funcionando"
 
 
+VARIABLES_NECESARIAS = ("ANTHROPIC_API_KEY", "TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN",
+                        "TWILIO_WHATSAPP_FROM", "MI_WHATSAPP")
+
+
+def _faltan_variables() -> list[str]:
+    return [v for v in VARIABLES_NECESARIAS if not env(v, obligatorio=False)]
+
+
 def busqueda_programada() -> None:
+    if _faltan_variables():
+        # Si buscáramos sin poder enviar, las ofertas quedarían como "vistas" y nunca te llegarían.
+        log.warning("Búsqueda omitida: faltan variables de configuración.")
+        return
     try:
         mensaje = bot.buscar()
         if mensaje:
@@ -84,10 +97,24 @@ def busqueda_programada() -> None:
         log.exception("Falló la búsqueda programada")
 
 
+def comprobar_configuracion() -> None:
+    """Avisa en los logs de lo que falta, para que sea fácil de arreglar desde el panel."""
+    faltan = _faltan_variables()
+    if faltan:
+        log.error("⚠️ Faltan variables: %s", ", ".join(faltan))
+    try:
+        cargar_cv()
+    except FileNotFoundError as e:
+        log.error("⚠️ %s", e)
+    log.info("Base de datos de ofertas: %s", RUTA_DB)
+    log.info("URL para Twilio: %s/whatsapp", url_publica() or "(sin URL pública)")
+
+
 def arrancar(puerto: int = 5000) -> None:
+    comprobar_configuracion()
     horas = cargar_config().get("avisos", {}).get("cada_horas", 6)
     planificador = BackgroundScheduler()
     planificador.add_job(busqueda_programada, "interval", hours=horas, next_run_time=datetime.now())
     planificador.start()
     log.info("Búsqueda automática cada %s h. Escuchando en el puerto %d", horas, puerto)
-    app.run(host="0.0.0.0", port=puerto)
+    serve(app, host="0.0.0.0", port=puerto)

@@ -1,5 +1,7 @@
 # 🤖 jobbot — tu asistente de búsqueda de empleo remoto por WhatsApp
 
+> 📱 **¿Usas iPad?** Ve directamente a la [guía de Railway](GUIA_RAILWAY.md). Lo de abajo es para instalarlo en un ordenador.
+
 Este bot:
 
 1. **Busca ofertas remotas** cada pocas horas en Remotive, RemoteOK y Arbeitnow, con tus palabras clave.
@@ -75,11 +77,9 @@ Escribe `ayuda` al bot por WhatsApp. ¡Listo! Buscará solo cada `cada_horas` ho
 
 ---
 
-## Tenerlo encendido 24/7
-Tu ordenador tiene que estar encendido para que el bot funcione. Para no depender de él, súbelo
-a un servicio como Railway, Render o Fly.io (comando de arranque: `python -m jobbot servir`,
-y copia las variables de `.env` en su panel). Ten en cuenta que muchos planes gratuitos borran
-los archivos al reiniciar, así que la lista de ofertas ya vistas (`ofertas.db`) se perdería.
+## Tenerlo encendido 24/7 (sin ordenador)
+📱 **Sigue la [guía para Railway desde el iPad](GUIA_RAILWAY.md).** El bot queda funcionando
+en la nube, con tu CV en la variable `CV_TEXTO` y las ofertas guardadas en un disco permanente.
 
 Alternativa sin servidor: solo avisos (sin responder) con cron:
 ```
