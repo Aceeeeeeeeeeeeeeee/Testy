@@ -1,5 +1,5 @@
 # Tu Nombre
-Desarrollador/a Python · Remoto
+Atención al cliente · Calidad · Team Leader · Remoto
 
 ## Resumen
 Pega aquí tu CV completo en texto (copia y pega desde tu PDF o Word).

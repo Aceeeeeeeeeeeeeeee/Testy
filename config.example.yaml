@@ -3,16 +3,49 @@
 busqueda:
   # Se envía una oferta si su título o etiquetas contienen ALGUNA de estas palabras.
   palabras_clave:
-    - python
-    - data analyst
-    - backend
+    # Atención al cliente
+    - customer support
+    - customer service
+    - customer success
+    - customer experience
+    - customer care
+    - support agent
+    - support specialist
+    - support representative
+    - help desk
+    - helpdesk
+    - atención al cliente
+    - servicio al cliente
+    - soporte
+    # Analista de calidad
+    - quality analyst
+    - quality assurance
+    - quality specialist
+    - qa analyst
+    - qa specialist
+    - analista de calidad
+    - calidad
+    # Team leader
+    - team leader
+    - team lead
+    - supervisor
+    - líder de equipo
+    - coordinador
+    - coordinadora
   # También mirar la descripción completa (da más resultados, pero menos precisos).
   buscar_en_descripcion: false
   # Descartar ofertas cuyo título contenga alguna de estas palabras.
+  # Quitan los puestos técnicos de programación (p. ej. "QA Automation Engineer"
+  # o "Engineering Team Lead"), que también usan "QA" o "team lead".
   excluir:
-    - senior staff
-    - principal
+    - engineer
+    - engineering
+    - developer
+    - software
+    - automation
+    - sdet
     - intern
+    - internship
   # Ubicaciones aceptadas para ofertas remotas. Vacío = cualquiera.
   # Se compara con texto como "Worldwide", "USA only", "Europe", "LATAM"...
   ubicaciones:

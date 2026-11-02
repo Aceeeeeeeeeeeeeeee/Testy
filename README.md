@@ -8,7 +8,7 @@ Este bot:
 
 ```
 Bot:  🔎 3 ofertas nuevas
-      *14.* Python Developer — Acme 🌍 Worldwide  https://...
+      *14.* Customer Support Team Lead — Acme 🌍 Worldwide  https://...
 Tú:   carta 14
 Bot:  ✍️ Preparando la carta…
 Bot:  Estimado equipo de Acme: ...
@@ -41,7 +41,7 @@ cp config.example.yaml config.yaml   # palabras clave, exclusiones, ubicaciones�
 cp cv.example.md cv.md               # pega aquí tu CV en texto
 cp .env.example .env                 # claves (paso 3 y 4)
 ```
-Edita `config.yaml` con **los puestos que buscas** (por ejemplo `python`, `customer support`, `diseñador ux`…).
+Edita `config.yaml` con **los puestos que buscas** (ya viene preparado para atención al cliente, analista de calidad y team leader).
 
 ### 3. Clave de Claude
 Crea una API key en <https://platform.claude.com> y ponla en `.env` como `ANTHROPIC_API_KEY`.
