@@ -1,0 +1,41 @@
+# Copia este archivo como config.yaml y ajústalo a lo que buscas.
+
+busqueda:
+  # Se envía una oferta si su título o etiquetas contienen ALGUNA de estas palabras.
+  palabras_clave:
+    - python
+    - data analyst
+    - backend
+  # También mirar la descripción completa (da más resultados, pero menos precisos).
+  buscar_en_descripcion: false
+  # Descartar ofertas cuyo título contenga alguna de estas palabras.
+  excluir:
+    - senior staff
+    - principal
+    - intern
+  # Ubicaciones aceptadas para ofertas remotas. Vacío = cualquiera.
+  # Se compara con texto como "Worldwide", "USA only", "Europe", "LATAM"...
+  ubicaciones:
+    - worldwide
+    - anywhere
+    - global
+    - latam
+    - latin america
+    - europe
+    - spain
+
+# Fuentes de ofertas remotas (APIs públicas, no requieren clave).
+fuentes:
+  - remotive
+  - remoteok
+  - arbeitnow
+
+avisos:
+  cada_horas: 6          # cada cuántas horas busca solo
+  max_por_aviso: 10      # máximo de ofertas por mensaje
+
+redaccion:
+  # Idioma de cartas y CV: "auto" = el mismo idioma que la oferta.
+  idioma: auto
+  # Tu nombre y datos de contacto para firmar las cartas.
+  firma: "Tu Nombre · tu@email.com · linkedin.com/in/tu-perfil"
