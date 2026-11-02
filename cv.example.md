@@ -13,3 +13,7 @@ Cuanto más detalle (proyectos, logros con números, tecnologías), mejores cart
 
 ## Habilidades
 - ...
+
+## Idiomas
+- Español: nativo
+- Inglés: profesional (C1)

@@ -1,5 +1,6 @@
 """Lógica del bot: buscar ofertas, formatear avisos y responder a tus órdenes."""
 import logging
+import re
 
 from . import store
 from .config import cargar_config
@@ -17,8 +18,18 @@ AYUDA = """🤖 *Bot de empleo remoto*
 • *ayuda* — este mensaje"""
 
 
+BILINGUE = re.compile(r"\b(bilingual|spanish|español|espanol)\b", re.I)
+
+
+def pide_espanol(o) -> bool:
+    """Ofertas que piden español: ventaja para ti (suelen pagar más y hay menos competencia)."""
+    return bool(BILINGUE.search(f"{o['titulo']} {o['etiquetas']} {o['descripcion']}"))
+
+
 def linea(o) -> str:
     extra = f" · 💰 {o['salario']}" if o["salario"] else ""
+    if pide_espanol(o):
+        extra += " · 🗣️ *Piden español*"
     return f"*{o['num']}.* {o['titulo']} — {o['empresa']}\n🌍 {o['ubicacion'] or '?'}{extra}\n{o['url']}"
 
 
@@ -32,6 +43,7 @@ def buscar() -> str | None:
     if not nuevas:
         return None
 
+    nuevas.sort(key=lambda o: not pide_espanol(o))  # primero las que piden español
     maximo = cfg.get("avisos", {}).get("max_por_aviso", 10)
     cabecera = f"🔎 *{len(nuevas)} ofertas {'encontradas' if primera_vez else 'nuevas'}*"
     cuerpo = "\n\n".join(linea(o) for o in nuevas[:maximo])
