@@ -23,6 +23,6 @@ def encaja(oferta: Oferta, filtros: dict) -> bool:
         return False
 
     if ubicaciones and oferta.ubicacion:
-        if not any(u.lower() in oferta.ubicacion.lower() for u in ubicaciones):
+        if not any(_contiene(oferta.ubicacion, u) for u in ubicaciones):
             return False
     return True

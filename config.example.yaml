@@ -48,14 +48,17 @@ busqueda:
     - internship
   # Ubicaciones aceptadas para ofertas remotas. Vacío = cualquiera.
   # Se compara con texto como "Worldwide", "USA only", "Europe", "LATAM"...
+  # Configurado para alguien que vive en Estados Unidos.
   ubicaciones:
     - worldwide
     - anywhere
     - global
-    - latam
-    - latin america
-    - europe
-    - spain
+    - us
+    - usa
+    - u.s.
+    - united states
+    - north america
+    - americas
 
 # Fuentes de ofertas remotas (APIs públicas, no requieren clave).
 fuentes:
